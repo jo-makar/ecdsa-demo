@@ -67,7 +67,7 @@ class Point:
             return Point(None, u.curve)
 
         p = u.curve.p
-        m = ((v.y - u.y) * _modinv(v.x - u.x, p)) % p
+        m = ((v.y - u.y) * modinv(v.x - u.x, p)) % p
         x = (m**2 - u.x - v.x) % p
         y = (m*(u.x - x) - u.y) % p
         return Point((x, y), u.curve)
@@ -78,7 +78,7 @@ class Point:
 
         a = u.curve.a
         p = u.curve.p
-        m = ((3 * u.x**2 + a) * _modinv(2 * u.y, p)) % p
+        m = ((3 * u.x**2 + a) * modinv(2 * u.y, p)) % p
         x = (m**2 - 2*u.x) % p
         y = (m*(u.x - x) - u.y) % p
         return Point((x, y), u.curve)
@@ -119,7 +119,7 @@ class Point:
 
 # Modular Inverse
 # Find b such that (a * b) % m = 1
-def _modinv(a: int, m: int) -> int:
+def modinv(a: int, m: int) -> int:
     assert m > 1
 
     if a < 0:
@@ -129,7 +129,7 @@ def _modinv(a: int, m: int) -> int:
     assert 0 < a and a < m
 
     # The inverse will not exist unless a and m are coprime
-    assert _gcd(a, m) == 1
+    assert gcd(a, m) == 1
 
     # Extended Euclidean algorithm
     # https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
@@ -170,7 +170,7 @@ def _modinv(a: int, m: int) -> int:
 
 
 # Greatest Common Denominator
-def _gcd(u: int, v: int) -> int:
+def gcd(u: int, v: int) -> int:
     assert u >= 0 and v >= 0
 
     if u == 0 and v == 0:

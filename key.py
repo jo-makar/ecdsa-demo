@@ -31,6 +31,7 @@ class Privkey:
         self.a = str_to_int(output_map['A'])
         self.b = str_to_int(output_map['B'])
         self.p = str_to_int(output_map['Prime'])
+        self.n = str_to_int(output_map['Order'])
 
         self.d = str_to_int(output_map['priv'])
 
@@ -71,8 +72,10 @@ class Pubkey:
         self.a = str_to_int(output_map['A'])
         self.b = str_to_int(output_map['B'])
         self.p = str_to_int(output_map['Prime'])
+        self.n = str_to_int(output_map['Order'])
 
-        self.g = Point(
-                     output_map['Generator (uncompressed)'].replace(':', ''),
-                     Curve(self.a, self.b, self.p)
-                 )
+        curve = Curve(self.a, self.b, self.p)
+        str_to_point = lambda s: Point(s.replace(':', ''), curve)
+
+        self.g = str_to_point(output_map['Generator (uncompressed)'])
+        self.pubkey = str_to_point(output_map['pub'])
